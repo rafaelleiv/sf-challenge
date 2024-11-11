@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  legislative-news-app:
+    container_name: legislative-news-nextjs-app
+    build:
+      # Specify the build context and Dockerfile for the legislative-news-app service
+      context: ./legislative-news-aggregator-app
+      dockerfile: Dockerfile
+    ports:
+      # Map port 3000 of the host to port 3000 of the container
+      - "3000:3000"
+    env_file:
+      # Load environment variables from the .env file
+      - ./.env
+    depends_on:
+      # Define service dependencies
+      - mysql
+    command: >
+      sh -c "
+        npm run db:setup &&
+        npm run start
+      "
+
+  news-aggregator-service:
+    container_name: legislative-news-nestjs-service
+    build:
+      # Specify the build context and Dockerfile for the news-aggregator-service
+      context: ./news-aggregator-service
+      dockerfile: Dockerfile
+    ports:
+      # Map port 3001 of the host to port 3001 of the container
+      - "3001:3001"
+    env_file:
+      # Load environment variables from the .env file
+      - ./.env
+    depends_on:
+      # Define service dependencies
+      - mysql
+      - legislative-news-app
+    command: >
+      sh -c "
+        npm run start
+      "
+
+  mysql:
+    container_name: legislative-news-mysql
+    image: mysql:8
+    environment:
+      # Set MySQL environment variables
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      # Persist MySQL data in a Docker volume
+      - mysql_data:/var/lib/mysql
+      # Initialize the database with the provided SQL script
+      #- ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  # Define a named volume for MySQL data persistence
+  mysql_data:

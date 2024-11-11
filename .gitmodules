@@ -1,0 +1,6 @@
+[submodule "news-aggregator-service"]
+	path = news-aggregator-service
+	url = https://github.com/rafaelleiv/news-aggregator-service
+[submodule "legislative-news-aggregator-app"]
+	path = legislative-news-aggregator-app
+	url = https://github.com/rafaelleiv/legislative-news-aggregator-app
