@@ -54,6 +54,10 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 
 **Important:** Never commit sensitive information (e.g., database passwords) to version control. Use tools like Docker secrets or environment variable management solutions in production if needed.
 
+<br>
+
+---
+
 ## Setup and Run
 
 ### Development Environment
@@ -89,6 +93,10 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
     - Run the services in detached mode (`-d`), allowing them to continue running in the background.
     - Build and optimize the Next.js and NestJS images for production.
     - Use the `.env` file for environment-specific configuration.
+
+<br>
+
+---
 
 ## Docker Commands
 
@@ -136,10 +144,6 @@ You will need to specify the configuration file when running Docker Compose comm
   docker exec -it legislative-news-mysql mysql -u root -p
   ```
 
-Aquí tienes una sección adicional para el `README.md` que explica cómo utilizar el prefijo de proyecto en Docker Compose para ejecutar múltiples entornos simultáneamente:
-
----
-
 ### Running Multiple Environments Simultaneously
 
 In some cases, you may want to run both the development and production environments at the same time. Docker Compose allows you to set a custom project name using the `--project-name` (or `-p`) option, which changes the prefix of container names. This helps you differentiate containers between environments, avoiding naming conflicts and enabling parallel execution.
@@ -175,6 +179,68 @@ This feature is especially useful for **testing** and **debugging** both develop
 
 - **Updating Code in Development**:
   If code changes are not reflected, ensure that volumes are correctly mapped for hot-reloading in the `docker-compose.dev.yml` configuration.
+
+<br>
+
+---
+
+## Repository Structure and Submodule Management
+
+This project uses a **monorepo** setup with Git **submodules** to manage multiple projects independently within a single repository:
+
+- **`legislative-news-aggregator-app/`**: Next.js application.
+- **`news-aggregator-service/`**: NestJS service for external news aggregation.
+
+### Why Submodules?
+
+Using Git submodules allows each project to have its own repository, enabling independent version control, isolated deployments, and centralized management of shared configurations.
+
+### Common Commands
+
+#### 1. Cloning the Repository with Submodules
+
+Clone the main repository and initialize the submodules:
+
+```bash
+git clone --recurse-submodules <URL-of-root-repo>
+```
+
+Or, if already cloned:
+
+```bash
+git submodule init
+git submodule update
+```
+
+#### 2. Making Changes in a Submodule
+
+- Navigate to the submodule directory, commit, and push your changes:
+
+  ```bash
+  cd legislative-news-aggregator-app  # or news-aggregator-service
+  git add .
+  git commit -m "Your message"
+  git push origin main
+  ```
+
+- Update the submodule reference in the root repository:
+
+  ```bash
+  cd ..
+  git add legislative-news-aggregator-app  # or news-aggregator-service
+  git commit -m "Update submodule reference"
+  git push origin main
+  ```
+
+#### 3. Pulling Updates for Submodules
+
+To fetch the latest changes from each submodule’s repository:
+
+```bash
+git submodule update --remote --merge
+```
+
+This structure provides a flexible way to work with each project independently while keeping a unified project structure for shared configurations.
 
 ### Stay in touch
 
