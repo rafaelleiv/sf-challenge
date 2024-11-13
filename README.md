@@ -1,6 +1,8 @@
 # Legislative News Aggregator Project
 
-This project is a legislative news aggregator application built with Next.js (frontend and backend) and NestJS (external data service), with MySQL as the database. Docker is used to containerize the services for both development and production environments.
+This project is a legislative news aggregator application built with Next.js (frontend and backend) and NestJS (external
+data service), with MySQL as the database. Docker is used to containerize the services for both development and
+production environments.
 
 ## Table of Contents
 
@@ -18,9 +20,13 @@ This project is a legislative news aggregator application built with Next.js (fr
 
 The project is composed of three main services:
 
-1. **Next.js App** - Acts as both the frontend and backend for the legislative news aggregator. It provides the user interface for viewing, filtering, and searching legislative news. The backend in Next.js handles API requests and serves content for the frontend.
+1. **Next.js App** - Acts as both the frontend and backend for the legislative news aggregator. It provides the user
+   interface for viewing, filtering, and searching legislative news. The backend in Next.js handles API requests and
+   serves content for the frontend.
 
-2. **NestJS Service** - A backend service responsible for importing news articles from external sources. This service continuously pulls data from public news APIs, stores the latest news in the MySQL database, and uses WebSockets to update the Next.js client in real-time.
+2. **NestJS Service** - A backend service responsible for importing news articles from external sources. This service
+   continuously pulls data from public news APIs, stores the latest news in the MySQL database, and uses WebSockets to
+   update the Next.js client in real-time.
 
 3. **MySQL Database** - Stores all application data, including news articles, topics, and user preferences.
 
@@ -37,7 +43,8 @@ Ensure the following software is installed on your local machine:
 
 ### Environment Variables
 
-All environment variables are stored in a `.env` file in the root of the project. This file is loaded by Docker Compose for both the Next.js app and the NestJS service.
+All environment variables are stored in a `.env` file in the root of the project. This file is loaded by Docker Compose
+for both the Next.js app and the NestJS service.
 
 **Sample `.env` file**:
 
@@ -52,7 +59,8 @@ MYSQL_PASSWORD=app_password
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
-**Important:** Never commit sensitive information (e.g., database passwords) to version control. Use tools like Docker secrets or environment variable management solutions in production if needed.
+**Important:** Never commit sensitive information (e.g., database passwords) to version control. Use tools like Docker
+secrets or environment variable management solutions in production if needed.
 
 <br>
 
@@ -66,7 +74,8 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
    Ensure that all necessary environment variables are set in the `.env` file in the root of the project.
 
 2. **Run Docker Compose for Development**:
-   Use the following command to start the services in development mode. The configuration file `docker-compose.dev.yml` should define mappings to local files to support hot-reloading.
+   Use the following command to start the services in development mode. The configuration file `docker-compose.dev.yml`
+   should define mappings to local files to support hot-reloading.
 
    ```bash
    docker-compose -f docker-compose.dev.yml up --build
@@ -83,7 +92,8 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
    Ensure that all environment variables for production are set in the `.env` file or environment management solution.
 
 2. **Run Docker Compose for Production**:
-   Use the following command to start the services in production mode, which should run with optimizations and without local file mappings.
+   Use the following command to start the services in production mode, which should run with optimizations and without
+   local file mappings.
 
    ```bash
    docker-compose -f docker-compose.prod.yml up --build -d
@@ -101,7 +111,9 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 ## Docker Commands
 
 ### Common Commands
-You will need to specify the configuration file when running Docker Compose commands to ensure the correct environment settings are used.
+
+You will need to specify the configuration file when running Docker Compose commands to ensure the correct environment
+settings are used.
 
 *docker-compose -f docker-compose.dev.yml up --build*
 <br>
@@ -146,7 +158,10 @@ You will need to specify the configuration file when running Docker Compose comm
 
 ### Running Multiple Environments Simultaneously
 
-In some cases, you may want to run both the development and production environments at the same time. Docker Compose allows you to set a custom project name using the `--project-name` (or `-p`) option, which changes the prefix of container names. This helps you differentiate containers between environments, avoiding naming conflicts and enabling parallel execution.
+In some cases, you may want to run both the development and production environments at the same time. Docker Compose
+allows you to set a custom project name using the `--project-name` (or `-p`) option, which changes the prefix of
+container names. This helps you differentiate containers between environments, avoiding naming conflicts and enabling
+parallel execution.
 
 #### Usage
 
@@ -167,18 +182,23 @@ To run the development and production environments simultaneously, use the follo
 #### Utility
 
 Using custom project names allows you to:
-- **Avoid naming conflicts** between containers in different environments.
-- **Run multiple environments simultaneously**, enabling you to test both setups on the same machine without interference.
 
-This feature is especially useful for **testing** and **debugging** both development and production environments side-by-side.
+- **Avoid naming conflicts** between containers in different environments.
+- **Run multiple environments simultaneously**, enabling you to test both setups on the same machine without
+  interference.
+
+This feature is especially useful for **testing** and **debugging** both development and production environments
+side-by-side.
 
 ## Troubleshooting
 
 - **Can't connect to MySQL**:
-  Ensure `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, and other related environment variables are correctly set in `.env`. Verify that the database service is running with `docker-compose ps`.
+  Ensure `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, and other related environment variables are correctly set in `.env`.
+  Verify that the database service is running with `docker-compose ps`.
 
 - **Updating Code in Development**:
-  If code changes are not reflected, ensure that volumes are correctly mapped for hot-reloading in the `docker-compose.dev.yml` configuration.
+  If code changes are not reflected, ensure that volumes are correctly mapped for hot-reloading in the
+  `docker-compose.dev.yml` configuration.
 
 <br>
 
@@ -186,14 +206,16 @@ This feature is especially useful for **testing** and **debugging** both develop
 
 ## Repository Structure and Submodule Management
 
-This project uses a **monorepo** setup with Git **submodules** to manage multiple projects independently within a single repository:
+This project uses a **monorepo** setup with Git **submodules** to manage multiple projects independently within a single
+repository:
 
 - **`legislative-news-aggregator-app/`**: Next.js application.
 - **`news-aggregator-service/`**: NestJS service for external news aggregation.
 
 ### Why Submodules?
 
-Using Git submodules allows each project to have its own repository, enabling independent version control, isolated deployments, and centralized management of shared configurations.
+Using Git submodules allows each project to have its own repository, enabling independent version control, isolated
+deployments, and centralized management of shared configurations.
 
 ### Common Commands
 
@@ -202,7 +224,7 @@ Using Git submodules allows each project to have its own repository, enabling in
 Clone the main repository and initialize the submodules:
 
 ```bash
-git clone --recurse-submodules <URL-of-root-repo>
+git clone --recurse-submodules https://github.com/rafaelleiv/sf-challenge.git
 ```
 
 Or, if already cloned:
@@ -240,7 +262,31 @@ To fetch the latest changes from each submodule’s repository:
 git submodule update --remote --merge
 ```
 
-This structure provides a flexible way to work with each project independently while keeping a unified project structure for shared configurations.
+### Actualización del Repositorio y Submódulos
+
+Para desarrolladores que ya tienen el proyecto clonado y desean actualizar el repositorio raíz y los submódulos a la
+última versión de la rama principal (main):
+
+```bash
+# 1. Update the root repository to the latest version on main
+git pull origin main
+
+# 2. Update all submodules to the latest version on main
+git submodule update --init --recursive
+
+# 3. Change to each submodule directory, update to the latest version on main, and pull changes
+git submodule foreach 'git checkout main && git pull origin main'
+
+# 4. Commit the changes to the root repository
+git add .
+git commit -m "Updated submodules to the latest version on main"
+
+# 5. Push the changes to the root repository
+git push origin main
+```
+
+This structure provides a flexible way to work with each project independently while keeping a unified project structure
+for shared configurations.
 
 ### Stay in touch
 
