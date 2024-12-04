@@ -4,3 +4,6 @@
 [submodule "legislative-news-aggregator-app"]
 	path = legislative-news-aggregator-app
 	url = https://github.com/rafaelleiv/legislative-news-aggregator-app
+[submodule "realtime-interaction-service"]
+	path = realtime-interaction-service
+	url = git@github.com:rafaelleiv/realtime-interaction-service.git
